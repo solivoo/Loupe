@@ -27,6 +27,7 @@ Loupe **no es la consola del navegador** ni un REPL donde corre cualquier JavaSc
 1. Elige un **ejemplo** del menú sobre el editor, o escribe un snippet dentro de lo [soportado](#snippets-soportados).
 2. Haz clic en **Step**. El **primer** clic carga el snippet en el diagrama; los siguientes avanzan un tick del loop (sync, colas, timers, consola).
 3. Haz clic en **Reset** para vaciar el diagrama y la consola. El snippet del editor **se conserva**.
+4. Abre **Glosario** (botón `?` en la cabecera) si necesitas repasar FIFO, LIFO, sync, microtareas o macrotareas.
 
 ## Ejemplos incluidos
 
@@ -50,7 +51,7 @@ Loupe **no es la consola del navegador** ni un REPL donde corre cualquier JavaSc
 
 La simulación prioriza **claridad pedagógica** sobre fidelidad byte a byte con el motor V8 o DevTools:
 
-- **Timers:** el delay del código se escala ×10 (p. ej. `50` → ~500 ms visibles). `setTimeout(0)` usa el mínimo del motor (~4 ms × escala). Los contadores corren en Web APIs y, al vencer, el callback pasa a macrotareas.
+- **Timers:** el delay del código se escala ×10 (p. ej. `50` → 500 ms sim ≈ 5 s reales visibles; `100` → ≈ 10 s). `setTimeout(0)` usa el mínimo del motor (~4 ms × escala). Los contadores corren en paralelo en Web APIs (barra de progreso); al vencer, el callback **entra en la cola de macrotareas** aunque el sync siga ejecutándose — igual que en el navegador, aunque la macro no se ejecute hasta vaciar stack y micros.
 - **Call Stack:** LIFO; las funciones empujan un *frame*; `await` hace pop del frame async.
 - **Idealizaciones:** en algunos casos las microtareas se muestran ya en cola al registrar el `.then` (más legible en Step que en DevTools).
 
