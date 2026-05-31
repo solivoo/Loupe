@@ -6,7 +6,6 @@ import {
   formatTimerPendingLabel,
 } from './webApiTimerSimulation'
 import { promoteWebApiTimerToMacro } from './eventLoopStoreInternals'
-import { nextId } from './eventLoopStore'
 
 export type SimulateStepContext = {
   set: (partial: Partial<EventLoopStore>) => void
