@@ -1,5 +1,9 @@
 # Loupe
 
+<p align="center">
+  <img src="public/loupe-cover.jpg" alt="Loupe — visualizador interactivo del event loop de JavaScript" width="900">
+</p>
+
 Visualizador **interactivo** del **event loop de JavaScript**. Elige un snippet, avanza **paso a paso** con **Step** y observa cómo se mueve el trabajo entre **Call Stack**, **Web APIs**, colas de **microtareas** y **macrotareas**, y la **consola**.
 
 Reimplementación moderna inspirada en el [Loupe original](https://github.com/latentflip/loupe) (Philip Roberts) y en la charla de Jake Archibald *What the heck is the event loop anyway?*
