@@ -79,5 +79,3 @@ pnpm preview  # preview del build
 
 [MIT](LICENSE) — uso, copia, modificación y distribución libres, con atribución.
 
-El [Loupe original](https://github.com/latentflip/loupe) de Philip Roberts también es MIT.
-
