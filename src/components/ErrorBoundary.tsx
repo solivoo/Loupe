@@ -40,7 +40,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       <div role="alert" className="ui-error">
         <h1 className="ui-error__title">Algo se rompió 😅</h1>
         <p className="ui-error__text">
-          La aplicación encontró un error inesperado. Probá recargar la página.
+          La aplicación encontró un error inesperado. Prueba recargar la página.
         </p>
         {this.state.message && (
           <pre className="ui-error__detail">{this.state.message}</pre>

@@ -18,7 +18,7 @@ export function ExampleSelector({ activeId, onLoadExample }: ExampleSelectorProp
   const listId = useId()
 
   const active = getExampleById(activeId)
-  const triggerLabel = active?.title ?? 'Elegí un ejemplo…'
+  const triggerLabel = active?.title ?? 'Elige un ejemplo…'
 
   const pickExample = useCallback(
     (example: EventLoopExample) => {

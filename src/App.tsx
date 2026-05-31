@@ -3,7 +3,7 @@ import { EventLoopCanvas } from './canvas/EventLoopCanvas'
 import { ControlPanel } from './canvas/ControlPanel'
 import { CodeEditor } from './canvas/CodeEditor'
 import '@xyflow/react/dist/style.css'
-import './app-new.css'
+import './app.css'
 
 export function App() {
   const phase = useEventLoopStore((s) => s.phase)
@@ -21,7 +21,7 @@ export function App() {
           <div>
             <h1>Loupe</h1>
             <p className="app-tagline">
-              Visualizá el <strong>event loop</strong> del navegador ·
+              Visualiza el <strong>event loop</strong> del navegador ·
               Call Stack → Web APIs → Colas → Console
             </p>
           </div>

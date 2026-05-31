@@ -99,7 +99,7 @@ export function ControlPanel() {
           disabled={isFinished || stepInputLocked}
           title={
             stepInputLocked
-              ? 'Esperá a que termine la transición en el diagrama…'
+              ? 'Espera a que termine la transición en el diagrama…'
               : 'Avanza un paso del event loop (el primer clic carga el código en la gráfica).'
           }
         >
@@ -109,7 +109,7 @@ export function ControlPanel() {
         <button
           className="ctrl-btn ctrl-btn--reset"
           onClick={handleReset}
-          title="Vacía la gráfica y la consola; conserva el código del editor."
+          title="Vacía la gráfica y la consola; conserva el snippet del editor."
         >
           🔄 Reset
         </button>

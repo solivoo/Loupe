@@ -274,7 +274,7 @@ function handleWebApiTimers(ctx: SimulateStepContext, s: EventLoopStore, step: n
       to: 'webapis',
       label: formatTimerPendingLabel(after.webApis, after.simulatedTimeMs),
       concept:
-        'El contador corre en paralelo. Si ya hay micros o macrotareas en cola, el event loop las atiende primero; Step adelanta el tiempo del timer si querés.',
+        'El contador corre en paralelo. Si ya hay micros o macrotareas en cola, el event loop las atiende primero; Step adelanta el tiempo del timer si quieres.',
     },
   })
   return true

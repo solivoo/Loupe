@@ -81,7 +81,7 @@ export function CodeEditor() {
     <section className="code-editor-panel">
       <div className="code-editor-panel__head">
         <h2 className="code-editor-panel__title">
-          <span aria-hidden>{'</>'}</span> Tu código
+          <span aria-hidden>{'</>'}</span> Tu snippet
         </h2>
         <div className="code-editor-panel__actions">
           {highlightedLine !== null && (
@@ -107,7 +107,7 @@ export function CodeEditor() {
       <ExampleSelector activeId={activeExampleId} onLoadExample={handleLoadExample} />
 
       <p className="code-editor-panel__hint">
-        Elegí un <strong>ejemplo</strong> o escribí tu código y usá <strong>Step</strong> para avanzar paso a paso.
+        Elige un <strong>ejemplo</strong> o arma un <strong>snippet</strong> (console.log, .then, timers, async/await) y usa <strong>Step</strong> para avanzar.
         JS/TS: <code>console.log</code>, <code>Promise</code>, <code>setTimeout</code>, etc.
       </p>
 
@@ -128,7 +128,7 @@ export function CodeEditor() {
             autocompletion: true,
           }}
           indentWithTab
-          placeholder="// Escribí tu snippet aquí…"
+          placeholder="// Snippet didáctico (console.log, .then, setTimeout, async/await)…"
           aria-label="Editor de código fuente JavaScript"
         />
       </div>

@@ -4,8 +4,10 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const nodeEnv = mode === 'production' ? 'production' : 'development'
+  const forGitHubPages = process.env.GITHUB_PAGES === 'true'
 
   return {
+    base: forGitHubPages ? '/Loupe/' : '/',
     plugins: [
       react(),
       {

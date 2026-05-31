@@ -1,8 +1,29 @@
 {
   "name": "loupe",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "license": "MIT",
+  "description": "Visualizador paso a paso del event loop de JavaScript (Call Stack, Web APIs, micros, macros).",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/solivoo/Loupe.git"
+  },
+  "homepage": "https://solivoo.github.io/Loupe/",
+  "author": {
+    "name": "Sergio Olivo",
+    "url": "https://www.sergiolivo.com"
+  },
+  "bugs": {
+    "url": "https://github.com/solivoo/Loupe/issues"
+  },
+  "keywords": [
+    "javascript",
+    "event-loop",
+    "visualizer",
+    "education",
+    "react",
+    "typescript"
+  ],
   "type": "module",
   "scripts": {
     "dev": "vite",
