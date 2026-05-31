@@ -1,7 +1,7 @@
 import type { EventLoopPhase, EventLoopStore, Task } from './types'
 import { parseSimpleConsoleLog } from './consoleLogPattern'
 import {
-  WEB_API_SIM_MS_MANUAL_STEP,
+  WEB_API_PARALLEL_CLOCK_SIM_MS,
   WEB_API_DELAY_SCALE,
   formatTimerPendingLabel,
 } from './webApiTimerSimulation'
@@ -86,18 +86,14 @@ function handleInvokeFunction(
     highlightedLine: executing.line ?? null,
   })
 
-  ctx.get().popFromCallStack()
-  ctx.get().pushToCallStack({
-    id: nextId(),
-    code: executing.code,
-    label: executing.label,
-    type: 'sync',
-    line: executing.line,
+  const stack = ctx.get().callStack
+  const frame: Task = {
+    ...executing,
     syncKind: 'functionFrame',
-  })
-
+  }
   const pending = ctx.get().pendingScriptQueue
   ctx.set({
+    callStack: [...stack.slice(0, -1), frame],
     pendingScriptQueue: [...executing.functionBodyTasks, ...pending],
   })
   return true
@@ -182,6 +178,8 @@ function handleCallStackExecution(ctx: SimulateStepContext, s: EventLoopStore, s
   const executing = s.callStack.at(-1)
   if (!executing) return false
 
+  if (executing.syncKind === 'functionFrame') return false
+
   if (handleRegisterThen(ctx, executing, step)) return true
   if (handleRegisterAwait(ctx, executing, step)) return true
   if (handleInvokeFunction(ctx, executing, step)) return true
@@ -260,7 +258,7 @@ function handleWebApiTimers(ctx: SimulateStepContext, s: EventLoopStore, step: n
 
   if (promoteWebApiTimerToMacro(ctx.set, ctx.get, s.simulatedTimeMs, step)) return true
 
-  ctx.get().advanceWebApiSimClock(WEB_API_SIM_MS_MANUAL_STEP)
+  ctx.get().advanceWebApiSimClock(WEB_API_PARALLEL_CLOCK_SIM_MS)
   if (promoteWebApiTimerToMacro(ctx.set, ctx.get, ctx.get().simulatedTimeMs, step)) return true
 
   const after = ctx.get()
@@ -274,7 +272,7 @@ function handleWebApiTimers(ctx: SimulateStepContext, s: EventLoopStore, step: n
       to: 'webapis',
       label: formatTimerPendingLabel(after.webApis, after.simulatedTimeMs),
       concept:
-        'El contador corre en paralelo. Si ya hay micros o macrotareas en cola, el event loop las atiende primero; Step adelanta el tiempo del timer si quieres.',
+        'El contador corre en paralelo (misma escala ×10 en todos los ejemplos). Step avanza un tick del reloj si quieres; también corre solo mientras el timer está en Web APIs.',
     },
   })
   return true

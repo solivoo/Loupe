@@ -15,20 +15,22 @@ export const WEB_API_MIN_DELAY_MS = 4
 /** Delay efectivo simulado para setTimeout(…, 0). */
 export const WEB_API_ZERO_DELAY_SIM_MS = WEB_API_MIN_DELAY_MS * WEB_API_DELAY_SCALE
 
-/** Ms simulados por paso mientras el timer espera (Step manual). */
-export const WEB_API_SIM_MS_MANUAL_STEP = 500
+/**
+ * Reloj paralelo en Web APIs (mismo tick en UI automática y Step manual).
+ *
+ * Cada {@link WEB_API_PARALLEL_CLOCK_INTERVAL_MS} ms **reales** avanzan
+ * {@link WEB_API_PARALLEL_CLOCK_SIM_MS} ms **simulados** (~1:10 → lento y legible).
+ *
+ * Duración visible aproximada:
+ * - `setTimeout(0)`  → 40 ms sim  ≈ 0,4 s
+ * - `setTimeout(50)` → 500 ms sim ≈ 5 s
+ * - `setTimeout(100)`→ 1000 ms sim ≈ 10 s
+ */
+export const WEB_API_PARALLEL_CLOCK_INTERVAL_MS = 100
+export const WEB_API_PARALLEL_CLOCK_SIM_MS = 10
 
 /** Con Play activo, cada tick avanza más tiempo simulado. */
 export const WEB_API_SIM_MS_AUTO_STEP = 1200
-
-/** Intervalo real (ms) entre ticks del reloj paralelo de Web APIs. */
-export const WEB_API_PARALLEL_CLOCK_INTERVAL_MS = 50
-
-/**
- * Ms simulados por tick del reloj paralelo (1:1 → 500 ms sim ≈ 0,5 s reales).
- * Con {@link WEB_API_DELAY_SCALE}, un setTimeout(50) espera ~500 ms sim visibles.
- */
-export const WEB_API_PARALLEL_CLOCK_SIM_MS = 50
 
 /**
  * Delay efectivo hasta que el callback puede salir de Web APIs hacia macrotareas.
@@ -87,5 +89,12 @@ export function isRegisteringTimeouts(state: {
 }): boolean {
   const isTimeout = (t: { syncKind?: Task['syncKind'] }) => t.syncKind === 'registerTimeout'
   return state.pendingScriptQueue.some(isTimeout) || state.callStack.some(isTimeout)
+}
+
+/** Convierte ms sim restantes en segundos reales aproximados (para la UI). */
+export function estimatedRealSecondsRemaining(remainingSimMs: number): number {
+  if (remainingSimMs <= 0) return 0
+  const ticks = remainingSimMs / WEB_API_PARALLEL_CLOCK_SIM_MS
+  return (ticks * WEB_API_PARALLEL_CLOCK_INTERVAL_MS) / 1000
 }
 

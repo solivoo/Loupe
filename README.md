@@ -35,7 +35,7 @@ Loupe **no es la consola del navegador** ni un REPL donde corre cualquier JavaSc
 | 1 | Solo síncrono | Solo Call Stack; sin colas. |
 | 2 | Micro vs Macro | `.then` antes que `setTimeout(0)`. |
 | 3 | Cadena de microtareas | Varios `.then()` encadenados; se drenan todos. |
-| 4 | Varios timers | Delays distintos; orden de consola similar a DevTools. |
+| 4 | Varios timers | Registras 100→0→50; consola 0→50→100 — manda el **delay**, no el orden en el código. |
 | 5 | async / await | Tras `await`, la continuación es microtarea; `main()` sale de la pila. |
 | 6 | Prioridad de microtareas | Todo el lote de micros (incluso anidadas) antes de la macro. |
 

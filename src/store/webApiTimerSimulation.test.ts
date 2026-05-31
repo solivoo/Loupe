@@ -7,6 +7,8 @@ import {
   findReadyWebApiTask,
   formatDidacticTimerDelay,
   isRegisteringTimeouts,
+  estimatedRealSecondsRemaining,
+  WEB_API_PARALLEL_CLOCK_SIM_MS,
 } from './webApiTimerSimulation'
 
 describe('webApiTimerSimulation (escala didáctica)', () => {
@@ -50,6 +52,11 @@ describe('webApiTimerSimulation (escala didáctica)', () => {
     expect(findReadyWebApiTask(after0, 500)?.label).toBe('50')
     const after50 = after0.filter((t) => t.label !== '50')
     expect(findReadyWebApiTask(after50, 1000)?.label).toBe('100')
+  })
+
+  it('estimatedRealSecondsRemaining refleja el reloj paralelo lento', () => {
+    expect(estimatedRealSecondsRemaining(WEB_API_PARALLEL_CLOCK_SIM_MS)).toBe(0.1)
+    expect(estimatedRealSecondsRemaining(500)).toBe(5)
   })
 
   it('isRegisteringTimeouts detecta setTimeout pendientes en cola o stack', () => {

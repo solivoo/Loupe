@@ -10,8 +10,10 @@ export interface EventLoopExample {
   id: string
   /** Título corto para el selector. */
   title: string
-  /** Qué enseña este ejemplo (subtítulo / tooltip). */
+  /** Qué enseña este ejemplo (subtítulo bajo el selector). */
   concept: string
+  /** Si true, la guía larga está en comentarios del snippet — no repetir bajo el selector. */
+  guideInCode?: boolean
   /** Código fuente que se carga en el editor. */
   code: string
   /** Modo recomendado para verlo (no fuerza, solo sugiere). */
@@ -53,13 +55,18 @@ Promise.resolve()
 console.log("B");
 `
 
-const TIMERS_ORDER = `// 4) Varios timers: la cola de macrotareas es FIFO,
-// pero el delay decide cuándo entra cada callback.
+const TIMERS_ORDER = `// 4) Varios timers — ojo: el orden en el CÓDIGO no es el orden en consola.
+//
+// • Registras en sync: 100 → 0 → 50 (orden de escritura).
+// • Cada uno espera en Web APIs su delay (×10 en la simulación).
+// • Cuando vence, el callback ENTRA a la cola de macrotareas (FIFO ahí).
+// • Consola: timer 0ms → timer 50ms → timer 100ms (como DevTools).
+//   No confundas "lo pedí primero" con "sale primero": manda el delay.
 console.log("pido 3 timers");
 
-setTimeout(() => console.log("timer 100ms"), 100);
-setTimeout(() => console.log("timer 0ms"), 0);
-setTimeout(() => console.log("timer 50ms"), 50);
+setTimeout(() => console.log("timer 100ms"), 100); // registrado 1.º, vence último
+setTimeout(() => console.log("timer 0ms"), 0);     // registrado 2.º, vence primero
+setTimeout(() => console.log("timer 50ms"), 50);    // registrado 3.º, vence en medio
 
 console.log("sigo trabajando");
 `
@@ -114,7 +121,8 @@ export const EVENT_LOOP_EXAMPLES: readonly EventLoopExample[] = [
   {
     id: 'timers-order',
     title: 'Varios timers',
-    concept: 'El delay decide el orden de entrada a la cola de macrotareas.',
+    concept: 'El delay decide el orden en consola, no el orden en el código.',
+    guideInCode: true,
     code: TIMERS_ORDER,
     recommendedStride: 'browser',
   },

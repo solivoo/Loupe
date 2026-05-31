@@ -2,6 +2,7 @@ import { useEventLoopStore } from './store'
 import { EventLoopCanvas } from './canvas/EventLoopCanvas'
 import { ControlPanel } from './canvas/ControlPanel'
 import { CodeEditor } from './canvas/CodeEditor'
+import { DidacticGlossary } from './canvas/DidacticGlossary'
 import '@xyflow/react/dist/style.css'
 import './app.css'
 
@@ -26,6 +27,7 @@ export function App() {
             </p>
           </div>
         </div>
+        <DidacticGlossary />
       </header>
 
       {/* Estado de la simulación: siempre visible arriba del lienzo */}

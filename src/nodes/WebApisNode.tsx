@@ -18,13 +18,14 @@ function WebApisNodeInner() {
   const webApis = useEventLoopStore((s) => s.webApis)
   const simulatedTimeMs = useEventLoopStore((s) => s.simulatedTimeMs)
   const phase = useEventLoopStore((s) => s.phase)
+  const timersActive = webApis.length > 0
   const glow =
-    phase === 'awaiting-web-timers'
-      ? PHASE_GLOW[phase]
+    timersActive || phase === 'awaiting-web-timers'
+      ? PHASE_GLOW['awaiting-web-timers']
       : 'transparent'
 
   return (
-    <div style={glowContainerStyle(glow)}>
+    <div style={{ ...glowContainerStyle(glow), width: 288, maxWidth: 288 }}>
       <WebApisHandles />
 
       <div style={headerStyle}>

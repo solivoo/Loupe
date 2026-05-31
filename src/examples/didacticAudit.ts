@@ -18,7 +18,7 @@ export const DIDACTIC_AUDIT: Record<
       'timer 50ms',
       'timer 100ms',
     ],
-    note: 'setTimeout(0) → mínimo ~4 ms × escala; N>0 → N×10 ms sim (orden como DevTools)',
+    note: 'Registro sync 100→0→50; consola 0→50→100. El delay (×10 en sim) decide cuándo vence cada timer, no el orden en el código.',
   },
   'async-await': {
     expected: [

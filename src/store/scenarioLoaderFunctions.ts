@@ -133,14 +133,17 @@ export function createInvokeFunctionTask(
   line: number,
 ): Task {
   const cloned = cloneTasks(body)
-  cloned.push({
-    id: nextId(),
-    label: `← return ${name}()`,
-    code: '',
-    type: 'sync',
-    line,
-    syncKind: 'returnFromFunction',
-  })
+  const suspendsOnAwait = cloned.some((t) => t.syncKind === 'registerAwait')
+  if (!suspendsOnAwait) {
+    cloned.push({
+      id: nextId(),
+      label: `← return ${name}()`,
+      code: '',
+      type: 'sync',
+      line,
+      syncKind: 'returnFromFunction',
+    })
+  }
   return {
     id: nextId(),
     code: `${name}()`,

@@ -14,7 +14,6 @@ import {
   promoteWebApiTimerToMacro,
 } from './eventLoopStoreInternals'
 import { runDidacticSimulateStep } from './simulateDidacticStep'
-import { isRegisteringTimeouts } from './webApiTimerSimulation'
 
 // ─── Helpers ─────────────────────────────────────────────
 
@@ -150,7 +149,6 @@ export const useEventLoopStore = create<EventLoopStore>((set, get) => ({
   advanceWebApiSimClock: (deltaSimMs: number) => {
     const s = get()
     if (s.webApis.length === 0 || deltaSimMs <= 0 || s.phase === 'finished') return
-    if (s.stepInputLocked) return
 
     const simNow = s.simulatedTimeMs + deltaSimMs
     set({
@@ -162,7 +160,6 @@ export const useEventLoopStore = create<EventLoopStore>((set, get) => ({
   tryAutoPromoteWebApiTimer: () => {
     const s = get()
     if (s.webApis.length === 0 || s.phase === 'finished') return false
-    if (isRegisteringTimeouts(s)) return false
     return promoteWebApiTimerToMacro(set, get, s.simulatedTimeMs, s.currentStep + 1, {
       lockStep: false,
     })
