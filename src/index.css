@@ -1,0 +1,45 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --bg-deep: #07080f;
+  --bg-card: rgba(18, 22, 36, 0.72);
+  --bg-card-solid: #12162a;
+  --border: rgba(120, 140, 200, 0.22);
+  --border-glow: rgba(99, 179, 255, 0.35);
+  --text: #e8eaf4;
+  --text-muted: #8b93b0;
+  --accent: #5eb0ff;
+  --accent-2: #a78bfa;
+  --success: #4ade80;
+  --danger: #fb7185;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  background: var(--bg-deep);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgba(94, 176, 255, 0.35);
+}
